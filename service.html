@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>خدماتنا — مكتب المحامي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d0d0d;
+      --bg-secondary: #111111;
+      --bg-card: #161616;
+      --bg-card2: #1a1a1a;
+      --accent-gold: #c9a84c;
+      --accent-gold-light: #e8c96a;
+      --accent-gold-dim: rgba(201,168,76,0.12);
+      --text-primary: #f0ece0;
+      --text-secondary: #a09880;
+      --text-muted: #5a5548;
+      --border: rgba(201,168,76,0.2);
+      --border-subtle: rgba(255,255,255,0.06);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Cairo','Tajawal',sans-serif; background:var(--bg-primary); color:var(--text-primary); direction:rtl; }
+
+    /* NAV */
+    nav { position:fixed; top:0; right:0; left:0; z-index:100; background:rgba(13,13,13,0.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+    .nav-logo-icon { width:32px; height:32px; background:var(--accent-gold); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+    .nav-logo-text { font-size:14px; font-weight:700; color:var(--accent-gold); }
+    .nav-links { display:flex; gap:18px; list-style:none; }
+    .nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color .2s; padding:4px 0; border-bottom:2px solid transparent; }
+    .nav-links a:hover, .nav-links a.active { color:var(--accent-gold); border-bottom-color:var(--accent-gold); }
+
+    /* PAGE HEADER */
+    .page-header { margin-top:61px; padding:50px 20px 40px; text-align:center; position:relative; overflow:hidden; }
+    .page-header::before { content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%); width:600px; height:400px; background:radial-gradient(ellipse, rgba(201,168,76,0.1) 0%, transparent 70%); pointer-events:none; }
+    .breadcrumb { font-size:11px; color:var(--text-muted); margin-bottom:14px; }
+    .breadcrumb span { color:var(--accent-gold); }
+    .page-header h1 { font-family:'Tajawal',sans-serif; font-size:30px; font-weight:800; margin-bottom:12px; }
+    .page-header h1 span { color:var(--accent-gold); }
+    .page-header p { font-size:13px; color:var(--text-secondary); line-height:1.7; max-width:340px; margin:0 auto; }
+
+    /* FILTER TABS */
+    .filter-tabs { display:flex; gap:8px; overflow-x:auto; padding:0 20px 20px; scrollbar-width:none; }
+    .filter-tabs::-webkit-scrollbar { display:none; }
+    .tab { white-space:nowrap; padding:8px 16px; border-radius:50px; border:1px solid var(--border-subtle); background:var(--bg-card); color:var(--text-secondary); font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; font-family:'Cairo',sans-serif; }
+    .tab.active, .tab:hover { background:var(--accent-gold-dim); border-color:var(--border); color:var(--accent-gold); }
+
+    /* SERVICES LIST */
+    .services-wrap { padding:0 20px 50px; display:flex; flex-direction:column; gap:16px; }
+    .service-big-card { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:18px; overflow:hidden; transition:border-color .25s, transform .25s; }
+    .service-big-card:hover { border-color:var(--border); transform:translateY(-3px); }
+    .service-card-top { padding:22px 20px 18px; }
+    .service-card-head { display:flex; align-items:flex-start; gap:14px; margin-bottom:14px; }
+    .service-emoji-box { width:50px; height:50px; min-width:50px; background:var(--accent-gold-dim); border:1px solid var(--border); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; }
+    .service-card-info h3 { font-size:16px; font-weight:700; margin-bottom:5px; }
+    .service-badge { display:inline-block; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); border-radius:50px; padding:2px 10px; font-size:10px; color:var(--accent-gold); font-weight:600; }
+    .service-card-desc { font-size:12px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px; }
+    .service-features { display:flex; flex-direction:column; gap:7px; }
+    .feature-item { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-secondary); }
+    .feature-item::before { content:'✓'; color:var(--accent-gold); font-weight:700; font-size:13px; min-width:14px; }
+    .service-card-footer { padding:14px 20px; border-top:1px solid var(--border-subtle); display:flex; align-items:center; justify-content:space-between; }
+    .service-price { font-size:11px; color:var(--text-muted); }
+    .service-price strong { color:var(--accent-gold); font-size:14px; }
+    .btn-service { background:var(--accent-gold-dim); border:1px solid var(--border); border-radius:8px; padding:8px 16px; color:var(--accent-gold); font-size:12px; font-weight:600; cursor:pointer; font-family:'Cairo',sans-serif; transition:background .2s; }
+    .btn-service:hover { background:rgba(201,168,76,0.22); }
+
+    /* PROCESS */
+    .process-section { padding:0 20px 50px; }
+    .section-title { font-size:18px; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+    .section-title::before { content:''; width:3px; height:20px; background:var(--accent-gold); border-radius:2px; }
+    .process-steps { display:flex; flex-direction:column; gap:0; }
+    .process-step { display:flex; gap:16px; position:relative; }
+    .step-line-wrap { display:flex; flex-direction:column; align-items:center; }
+    .step-num { width:36px; height:36px; min-width:36px; border-radius:50%; background:var(--accent-gold-dim); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:var(--accent-gold); }
+    .step-connector { width:2px; flex:1; background:var(--border-subtle); margin:4px 0; min-height:30px; }
+    .process-step:last-child .step-connector { display:none; }
+    .step-content { padding-bottom:28px; flex:1; }
+    .step-content h4 { font-size:14px; font-weight:700; margin-bottom:5px; margin-top:6px; }
+    .step-content p { font-size:12px; color:var(--text-secondary); line-height:1.6; }
+
+    /* CTA */
+    .cta-section { margin:0 20px 50px; background:linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04)); border:1px solid var(--border); border-radius:18px; padding:28px 20px; text-align:center; }
+    .cta-section h2 { font-size:20px; font-weight:800; margin-bottom:10px; font-family:'Tajawal',sans-serif; }
+    .cta-section h2 span { color:var(--accent-gold); }
+    .cta-section p { font-size:12px; color:var(--text-secondary); margin-bottom:20px; line-height:1.6; }
+    .btn-cta { display:inline-block; background:linear-gradient(135deg, var(--accent-gold), #a8892e); border:none; border-radius:12px; padding:13px 28px; color:#0d0d0d; font-size:14px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif; text-decoration:none; transition:opacity .2s, transform .15s; }
+    .btn-cta:hover { opacity:.9; transform:translateY(-1px); }
+
+    /* FOOTER */
+    footer { background:var(--bg-secondary); border-top:1px solid var(--border); padding:24px 20px; text-align:center; }
+    .footer-logo { font-family:'Tajawal',sans-serif; font-size:16px; font-weight:800; color:var(--accent-gold); margin-bottom:12px; }
+    .footer-links { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-bottom:16px; }
+    .footer-links a { color:var(--text-muted); text-decoration:none; font-size:11px; transition:color .2s; }
+    .footer-links a:hover { color:var(--accent-gold); }
+    .footer-copy { font-size:10px; color:var(--text-muted); }
+
+    .whatsapp-fab { position:fixed; bottom:24px; left:20px; width:50px; height:50px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,0.4); cursor:pointer; transition:transform .2s; z-index:200; text-decoration:none; font-size:24px; }
+    .whatsapp-fab:hover { transform:scale(1.1); }
+
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity .55s ease, transform .55s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="indix.html">
+    <div class="nav-logo-icon">⚖️</div>
+    <span class="nav-logo-text">مكتب المحامي</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="indix.html">الرئيسية</a></li>
+    <li><a href="service.html" class="active">الخدمات</a></li>
+    <li><a href="Aboutus.html">من نحن</a></li>
+    <li><a href="team.html">الفريق</a></li>
+  </ul>
+</nav>
+
+<div class="page-header fade-up">
+  <div class="breadcrumb">الرئيسية ← <span>خدماتنا</span></div>
+  <h1>خدماتنا <span>القانونية</span></h1>
+  <p>نقدم مجموعة شاملة من الخدمات القانونية المتخصصة لأفراد وشركات بأعلى معايير الاحترافية</p>
+</div>
+
+<div class="filter-tabs">
+  <button class="tab active" onclick="filterCards('all', this)">الكل</button>
+  <button class="tab" onclick="filterCards('civil', this)">مدني</button>
+  <button class="tab" onclick="filterCards('criminal', this)">جنائي</button>
+  <button class="tab" onclick="filterCards('family', this)">أسرة</button>
+  <button class="tab" onclick="filterCards('commercial', this)">تجاري</button>
+  <button class="tab" onclick="filterCards('labor', this)">عمالي</button>
+</div>
+
+<div class="services-wrap">
+
+  <div class="service-big-card fade-up" data-cat="civil">
+    <div class="service-card-top">
+      <div class="service-card-head">
+        <div class="service-emoji-box">⚖️</div>
+        <div class="service-card-info">
+          <h3>القضايا المدنية</h3>
+          <span class="service-badge">الأكثر طلباً</span>
+        </div>
+      </div>
+      <p class="service-card-desc">نتولى جميع القضايا المدنية من عقود وتعويضات وعقارات ومنازعات ملكية أمام محاكم الدرجة الأولى والاستئناف والنقض.</p>
+      <div class="service-features">
+        <div class="feature-item">دراسة وتحليل القضية مجاناً</div>
+        <div class="feature-item">تمثيل قانوني أمام جميع المحاكم</div>
+        <div class="feature-item">متابعة تنفيذ الأحكام</div>
+        <div class="feature-item">استئناف وطعن بالنقض</div>
+      </div>
+    </div>
+    <div class="service-card-footer">
+      <div class="service-price">يبدأ من <strong>500 جنيه</strong></div>
+      <button class="btn-service">احجز الآن</button>
+    </div>
+  </div>
+
+  <div class="service-big-card fade-up" data-cat="family">
+    <div class="service-card-top">
+      <div class="service-card-head">
+        <div class="service-emoji-box">🏛️</div>
+        <div class="service-card-info">
+          <h3>قضايا الأسرة</h3>
+          <span class="service-badge">سري وخاص</span>
+        </div>
+      </div>
+      <p class="service-card-desc">نتعامل مع قضايا الأسرة بسرية تامة واحترام كامل، من طلاق وخلع وحضانة ونفقة وعقود زواج وميراث.</p>
+      <div class="service-features">
+        <div class="feature-item">طلاق وخلع أمام المحاكم</div>
+        <div class="feature-item">قضايا الحضانة والنفقة</div>
+        <div class="feature-item">عقود الزواج والطلاق الرسمية</div>
+        <div class="feature-item">قسمة التركات والميراث</div>
+      </div>
+    </div>
+    <div class="service-card-footer">
+      <div class="service-price">يبدأ من <strong>800 جنيه</strong></div>
+      <button class="btn-service">احجز الآن</button>
+    </div>
+  </div>
+
+  <div class="service-big-card fade-up" data-cat="criminal">
+    <div class="service-card-top">
+      <div class="service-card-head">
+        <div class="service-emoji-box">🛡️</div>
+        <div class="service-card-info">
+          <h3>القضايا الجنائية</h3>
+          <span class="service-badge">دفاع قوي</span>
+        </div>
+      </div>
+      <p class="service-card-desc">نوفر دفاعاً قانونياً قوياً في القضايا الجنائية بجميع أنواعها، مع خبرة واسعة في المرافعات والطعون الجنائية.</p>
+      <div class="service-features">
+        <div class="feature-item">مرافعات أمام محاكم الجنح والجنايات</div>
+        <div class="feature-item">الطعن بالاستئناف والنقض</div>
+        <div class="feature-item">قضايا الإفراج والضمانات</div>
+        <div class="feature-item">التمثيل في النيابة العامة</div>
+      </div>
+    </div>
+    <div class="service-card-footer">
+      <div class="service-price">يبدأ من <strong>1000 جنيه</strong></div>
+      <button class="btn-service">احجز الآن</button>
+    </div>
+  </div>
+
+  <div class="service-big-card fade-up" data-cat="commercial">
+    <div class="service-card-top">
+      <div class="service-card-head">
+        <div class="service-emoji-box">💼</div>
+        <div class="service-card-info">
+          <h3>القضايا التجارية</h3>
+          <span class="service-badge">للشركات</span>
+        </div>
+      </div>
+      <p class="service-card-desc">ندعم الشركات والمستثمرين في جميع منازعاتهم التجارية، من نزاعات العقود إلى الإفلاس وتصفية الشركات.</p>
+      <div class="service-features">
+        <div class="feature-item">نزاعات الشراكات والعقود</div>
+        <div class="feature-item">تأسيس وتصفية الشركات</div>
+        <div class="feature-item">التحكيم التجاري</div>
+        <div class="feature-item">الملكية الفكرية والعلامات التجارية</div>
+      </div>
+    </div>
+    <div class="service-card-footer">
+      <div class="service-price">يبدأ من <strong>1500 جنيه</strong></div>
+      <button class="btn-service">احجز الآن</button>
+    </div>
+  </div>
+
+  <div class="service-big-card fade-up" data-cat="labor">
+    <div class="service-card-top">
+      <div class="service-card-head">
+        <div class="service-emoji-box">👷</div>
+        <div class="service-card-info">
+          <h3>قضايا العمل</h3>
+          <span class="service-badge">حقوقك أولاً</span>
+        </div>
+      </div>
+      <p class="service-card-desc">نحمي حقوق العمال وأصحاب العمل في منازعات العمل من فصل تعسفي ومكافأة نهاية خدمة وتأمينات اجتماعية.</p>
+      <div class="service-features">
+        <div class="feature-item">قضايا الفصل التعسفي</div>
+        <div class="feature-item">مكافأة نهاية الخدمة</div>
+        <div class="feature-item">التأمينات الاجتماعية</div>
+        <div class="feature-item">عقود العمل وتسوياتها</div>
+      </div>
+    </div>
+    <div class="service-card-footer">
+      <div class="service-price">يبدأ من <strong>600 جنيه</strong></div>
+      <button class="btn-service">احجز الآن</button>
+    </div>
+  </div>
+
+</div>
+
+<section class="process-section fade-up">
+  <div class="section-title">كيف نعمل معك؟</div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-line-wrap"><div class="step-num">١</div><div class="step-connector"></div></div>
+      <div class="step-content"><h4>تواصل وحجز</h4><p>تواصل معنا عبر الموقع أو الواتساب لتحديد موعد الاستشارة</p></div>
+    </div>
+    <div class="process-step">
+      <div class="step-line-wrap"><div class="step-num">٢</div><div class="step-connector"></div></div>
+      <div class="step-content"><h4>دراسة القضية</h4><p>يقوم فريقنا بدراسة تفاصيل قضيتك وتقييم أفضل الخيارات القانونية المتاحة</p></div>
+    </div>
+    <div class="process-step">
+      <div class="step-line-wrap"><div class="step-num">٣</div><div class="step-connector"></div></div>
+      <div class="step-content"><h4>وضع الاستراتيجية</h4><p>نضع استراتيجية قانونية مخصصة لحالتك لضمان أفضل النتائج الممكنة</p></div>
+    </div>
+    <div class="process-step">
+      <div class="step-line-wrap"><div class="step-num">٤</div><div class="step-connector"></div></div>
+      <div class="step-content"><h4>التمثيل والمتابعة</h4><p>نتولى تمثيلك أمام المحاكم ونتابع معك كل خطوة حتى صدور الحكم النهائي</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section fade-up">
+  <h2>هل تحتاج <span>استشارة قانونية؟</span></h2>
+  <p>احصل على استشارتك الأولى مجاناً مع أحد محامينا المتخصصين</p>
+  <a href="page.html" class="btn-cta">احجز استشارة مجانية ←</a>
+</div>
+
+<footer>
+  <div class="footer-logo">⚖️ مكتب المحامي</div>
+  <div class="footer-links">
+    <a href="page.html">الرئيسية</a>
+    <a href="services.html">خدماتنا</a>
+    <a href="about.html">من نحن</a>
+    <a href="team.html">الفريق</a>
+    <a href="faq.html">الأسئلة الشائعة</a>
+  </div>
+  <div class="footer-copy">© 2025 مكتب المحامي — جميع الحقوق محفوظة</div>
+</footer>
+
+<a class="whatsapp-fab" href="https://wa.me/201000000000" target="_blank">💬</a>
+
+<script>
+  function filterCards(cat, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.service-big-card').forEach(c => {
+      if (cat === 'all' || c.dataset.cat === cat) {
+        c.style.display = 'block';
+      } else {
+        c.style.display = 'none';
+      }
+    });
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتب المحامي — خدمات قانونية متكاملة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #080807;
+      --bg:       #0b0b09;
+      --bg2:      #0f0f0c;
+      --surface:  #141410;
+      --surface2: #1a1a15;
+      --gold:     #c8a84b;
+      --gold2:    #e2c46a;
+      --gold3:    #a07830;
+      --golddim:  rgba(200,168,75,0.10);
+      --goldbord: rgba(200,168,75,0.22);
+      --white:    #f4efe2;
+      --grey:     #9a9282;
+      --muted:    #504b40;
+      --red:      #c85a3a;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      font-family:'Cairo','Tajawal',sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      direction:rtl;
+      overflow-x:hidden;
+      cursor:none;
+    }
+
+    /* ─── CUSTOM CURSOR ─── */
+    .cursor {
+      position:fixed; top:0; left:0;
+      width:10px; height:10px;
+      background:var(--gold);
+      border-radius:50%;
+      pointer-events:none;
+      z-index:9999;
+      transition:transform .15s ease, opacity .2s;
+      mix-blend-mode:difference;
+    }
+    .cursor-ring {
+      position:fixed; top:0; left:0;
+      width:36px; height:36px;
+      border:1px solid var(--gold);
+      border-radius:50%;
+      pointer-events:none;
+      z-index:9998;
+      transition:transform .35s ease, width .2s, height .2s, opacity .2s;
+      opacity:.5;
+    }
+    .cursor.hov { transform:translate(-50%,-50%) scale(2.5); opacity:.6; }
+    .cursor-ring.hov { width:54px; height:54px; opacity:.8; }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::after {
+      content:'';
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events:none;
+      z-index:9000;
+      opacity:.4;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position:fixed; top:0; right:0; left:0;
+      z-index:1000;
+      padding:0 28px;
+      height:68px;
+      display:flex; align-items:center; justify-content:space-between;
+      background:rgba(8,8,7,0);
+      border-bottom:1px solid transparent;
+      transition:background .4s, border-color .4s, backdrop-filter .4s;
+    }
+    nav.scrolled {
+      background:rgba(8,8,7,0.94);
+      border-color:var(--goldbord);
+      backdrop-filter:blur(16px);
+    }
+
+    .nav-brand {
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+    }
+    .nav-emblem {
+      width:40px; height:40px;
+      border:1px solid var(--goldbord);
+      border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--golddim);
+      position:relative;
+      overflow:hidden;
+    }
+    .nav-emblem::before {
+      content:'';
+      position:absolute; inset:0;
+      background:linear-gradient(135deg, var(--golddim), transparent);
+    }
+    .nav-emblem svg { width:22px; height:22px; fill:var(--gold); position:relative; }
+    .nav-brand-text { display:flex; flex-direction:column; line-height:1.1; }
+    .nav-brand-ar { font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700; color:var(--white); }
+    .nav-brand-sub { font-family:'Cormorant Garamond',serif; font-size:11px; color:var(--gold); letter-spacing:.12em; }
+
+    .nav-menu { display:flex; align-items:center; gap:6px; }
+    .nav-menu a {
+      color:var(--grey);
+      text-decoration:none;
+      font-size:13px;
+      font-weight:500;
+      padding:8px 14px;
+      border-radius:6px;
+      transition:color .2s, background .2s;
+      position:relative;
+    }
+    .nav-menu a:hover { color:var(--white); background:rgba(255,255,255,0.04); }
+    .nav-menu a.active { color:var(--gold); }
+
+    .nav-cta {
+      background:linear-gradient(135deg, var(--gold), var(--gold3));
+      color:var(--black) !important;
+      font-weight:700 !important;
+      padding:9px 20px !important;
+      border-radius:8px !important;
+      transition:opacity .2s, transform .15s !important;
+    }
+    .nav-cta:hover { opacity:.88; transform:translateY(-1px); background:rgba(255,255,255,0.04) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height:100svh;
+      display:flex; flex-direction:column;
+      justify-content:center;
+      padding:100px 28px 60px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* animated background scales */
+    .hero-bg {
+      position:absolute; inset:0;
+      pointer-events:none;
+    }
+    .hero-bg-scale {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(80px);
+      opacity:.18;
+      animation:breathe 8s ease-in-out infinite;
+    }
+    .hbs1 { width:500px; height:500px; background:var(--gold3); top:-150px; right:-100px; animation-delay:0s; }
+    .hbs2 { width:340px; height:340px; background:var(--gold); bottom:-80px; left:-60px; animation-delay:3s; }
+    .hbs3 { width:200px; height:200px; background:var(--gold2); top:40%; left:20%; animation-delay:5s; opacity:.07; }
+
+    @keyframes breathe {
+      0%,100% { transform:scale(1) translate(0,0); opacity:.18; }
+      50% { transform:scale(1.12) translate(10px,-10px); opacity:.25; }
+    }
+
+    /* diagonal gold line */
+    .hero-line {
+      position:absolute;
+      top:0; left:50%;
+      width:1px; height:100%;
+      background:linear-gradient(to bottom, transparent, var(--goldbord) 30%, var(--goldbord) 70%, transparent);
+      opacity:.4;
+    }
+
+    /* corner decoration */
+    .hero-corner {
+      position:absolute;
+      top:80px; left:28px;
+      width:60px; height:60px;
+      border-top:1px solid var(--goldbord);
+      border-left:1px solid var(--goldbord);
+      border-radius:2px 0 0 0;
+      opacity:.5;
+    }
+    .hero-corner2 {
+      position:absolute;
+      bottom:40px; right:28px;
+      width:60px; height:60px;
+      border-bottom:1px solid var(--goldbord);
+      border-right:1px solid var(--goldbord);
+      border-radius:0 0 2px 0;
+      opacity:.5;
+    }
+
+    .hero-content { position:relative; z-index:2; max-width:520px; }
+
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:13px; letter-spacing:.18em;
+      color:var(--gold);
+      margin-bottom:30px;
+      opacity:0; animation:fadeSlide .8s ease .2s forwards;
+    }
+    .hero-eyebrow-line {
+      width:36px; height:1px;
+      background:linear-gradient(to left, var(--gold), transparent);
+    }
+
+    .hero-h1 {
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(38px,10vw,62px);
+      font-weight:900;
+      line-height:1.12;
+      margin-bottom:22px;
+      opacity:0; animation:fadeSlide .8s ease .4s forwards;
+    }
+    .hero-h1 .line1 { display:block; color:var(--white); }
+    .hero-h1 .line2 {
+      display:block;
+      background:linear-gradient(90deg, var(--gold2), var(--gold), var(--gold3));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .hero-h1 .line3 { display:block; color:var(--white); }
+
+    .hero-desc {
+      font-size:14px; color:var(--grey); line-height:1.85;
+      max-width:400px;
+      margin-bottom:36px;
+      opacity:0; animation:fadeSlide .8s ease .6s forwards;
+    }
+
+    .hero-actions {
+      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+      opacity:0; animation:fadeSlide .8s ease .8s forwards;
+    }
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:8px;
+      background:linear-gradient(135deg, var(--gold), var(--gold3));
+      color:var(--black);
+      font-family:'Cairo',sans-serif; font-size:14px; font-weight:700;
+      padding:14px 28px; border-radius:10px; border:none;
+      cursor:pointer; text-decoration:none;
+      transition:transform .2s, box-shadow .2s;
+      box-shadow:0 4px 24px rgba(200,168,75,0.25);
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(200,168,75,0.35); }
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent;
+      color:var(--grey);
+      font-family:'Cairo',sans-serif; font-size:14px; font-weight:500;
+      padding:14px 20px; border-radius:10px;
+      border:1px solid var(--muted);
+      cursor:pointer; text-decoration:none;
+      transition:border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
+
+    .hero-stats {
+      display:flex; gap:32px;
+      margin-top:56px;
+      padding-top:36px;
+      border-top:1px solid var(--goldbord);
+      opacity:0; animation:fadeSlide .8s ease 1s forwards;
+    }
+    .hs-item {}
+    .hs-num {
+      font-family:'Cormorant Garamond',serif;
+      font-size:38px; font-weight:600;
+      color:var(--gold2); line-height:1;
+      margin-bottom:4px;
+    }
+    .hs-label { font-size:11px; color:var(--muted); font-weight:500; }
+
+    /* scroll hint */
+    .scroll-hint {
+      position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      opacity:0; animation:fadeSlide .8s ease 1.4s forwards;
+      z-index:2;
+    }
+    .scroll-hint-text { font-size:10px; color:var(--muted); letter-spacing:.12em; }
+    .scroll-hint-arrow {
+      width:1px; height:40px;
+      background:linear-gradient(to bottom, var(--gold), transparent);
+      animation:scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0%,100% { transform:scaleY(1); opacity:1; }
+      50% { transform:scaleY(.6) translateY(8px); opacity:.4; }
+    }
+
+    @keyframes fadeSlide {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding:80px 28px; }
+
+    .sec-label {
+      display:flex; align-items:center; gap:12px;
+      margin-bottom:14px;
+    }
+    .sec-label-line { width:28px; height:1px; background:var(--gold); }
+    .sec-label-text {
+      font-family:'Cormorant Garamond',serif;
+      font-size:12px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase;
+    }
+    .sec-title {
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(26px,6vw,40px); font-weight:800;
+      line-height:1.2; margin-bottom:14px;
+    }
+    .sec-title span { color:var(--gold); }
+    .sec-desc { font-size:13px; color:var(--grey); line-height:1.8; max-width:420px; }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow:hidden;
+      border-top:1px solid var(--goldbord);
+      border-bottom:1px solid var(--goldbord);
+      padding:16px 0;
+      background:var(--surface);
+    }
+    .marquee-track {
+      display:flex; gap:0;
+      animation:marquee 20s linear infinite;
+      white-space:nowrap;
+    }
+    .marquee-item {
+      display:inline-flex; align-items:center; gap:20px;
+      padding:0 30px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:15px; letter-spacing:.08em;
+      color:var(--muted);
+    }
+    .marquee-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); opacity:.5; }
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+    /* ─── SERVICES SECTION ─── */
+    .services-section { background:var(--bg2); }
+
+    .services-grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:2px;
+      margin-top:48px;
+      border:1px solid var(--goldbord);
+      border-radius:16px;
+      overflow:hidden;
+    }
+
+    .srv-card {
+      background:var(--surface);
+      padding:26px 24px;
+      display:flex; align-items:flex-start; gap:18px;
+      transition:background .3s;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+    .srv-card::before {
+      content:'';
+      position:absolute; top:0; right:0;
+      width:0; height:100%;
+      background:linear-gradient(to left, var(--golddim), transparent);
+      transition:width .4s ease;
+    }
+    .srv-card:hover::before { width:100%; }
+    .srv-card:hover { background:var(--surface2); }
+
+    .srv-icon-wrap {
+      width:48px; height:48px; min-width:48px;
+      border-radius:12px;
+      background:var(--golddim);
+      border:1px solid var(--goldbord);
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px;
+      transition:transform .3s;
+    }
+    .srv-card:hover .srv-icon-wrap { transform:scale(1.1) rotate(-5deg); }
+
+    .srv-body { flex:1; position:relative; }
+    .srv-title { font-size:15px; font-weight:700; margin-bottom:6px; }
+    .srv-text { font-size:12px; color:var(--grey); line-height:1.7; }
+
+    .srv-arrow {
+      align-self:center;
+      width:32px; height:32px; min-width:32px;
+      border-radius:50%;
+      border:1px solid var(--muted);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--muted); font-size:16px;
+      transition:border-color .2s, color .2s, transform .2s;
+      position:relative;
+    }
+    .srv-card:hover .srv-arrow { border-color:var(--gold); color:var(--gold); transform:translateX(-4px); }
+
+    /* ─── ABOUT SECTION ─── */
+    .about-section {}
+
+    .about-grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:40px;
+      margin-top:48px;
+    }
+
+    .about-visual {
+      position:relative;
+      border-radius:16px;
+      overflow:hidden;
+      min-height:280px;
+      background:var(--surface);
+      border:1px solid var(--goldbord);
+    }
+    .about-visual-inner {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:16px;
+    }
+    .about-big-icon { font-size:80px; opacity:.15; }
+    .about-circle {
+      position:absolute;
+      border-radius:50%;
+      border:1px solid var(--goldbord);
+    }
+    .ac1 { width:140px; height:140px; top:50%; left:50%; transform:translate(-50%,-50%); animation:rotateSlow 20s linear infinite; }
+    .ac2 { width:220px; height:220px; top:50%; left:50%; transform:translate(-50%,-50%); animation:rotateSlow 30s linear infinite reverse; opacity:.5; }
+    .ac3 { width:300px; height:300px; top:50%; left:50%; transform:translate(-50%,-50%); animation:rotateSlow 45s linear infinite; opacity:.25; }
+    @keyframes rotateSlow { from { transform:translate(-50%,-50%) rotate(0deg); } to { transform:translate(-50%,-50%) rotate(360deg); } }
+
+    .about-dot {
+      position:absolute; width:6px; height:6px;
+      background:var(--gold); border-radius:50%;
+    }
+    .ad1 { top:14%; right:14%; }
+    .ad2 { bottom:18%; left:12%; }
+    .ad3 { top:55%; right:8%; }
+
+    .about-badge {
+      position:absolute; bottom:20px; right:20px;
+      background:rgba(8,8,7,0.9);
+      border:1px solid var(--goldbord);
+      border-radius:12px;
+      padding:12px 16px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .ab-icon { font-size:20px; }
+    .ab-num { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--gold); }
+    .ab-text { font-size:10px; color:var(--grey); }
+
+    .about-text {}
+    .about-list { list-style:none; margin-top:24px; display:flex; flex-direction:column; gap:12px; }
+    .about-list li {
+      display:flex; align-items:flex-start; gap:12px;
+      font-size:13px; color:var(--grey); line-height:1.6;
+    }
+    .about-list li::before {
+      content:'—';
+      color:var(--gold); font-weight:700; min-width:16px;
+      margin-top:1px;
+    }
+    .about-list li strong { color:var(--white); }
+
+    /* ─── WHY US SECTION ─── */
+    .why-section { background:var(--bg2); }
+
+    .why-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:48px;
+    }
+
+    .why-card {
+      background:var(--surface);
+      border:1px solid var(--goldbord);
+      border-radius:14px;
+      padding:20px 16px;
+      transition:background .3s, transform .25s;
+    }
+    .why-card:hover { background:var(--surface2); transform:translateY(-3px); }
+    .why-card:first-child {
+      grid-column:1/-1;
+      display:flex; gap:18px; align-items:flex-start;
+    }
+
+    .why-num {
+      font-family:'Cormorant Garamond',serif;
+      font-size:42px; font-weight:600; color:var(--gold);
+      opacity:.35; line-height:1; margin-bottom:10px;
+    }
+    .why-card:first-child .why-num { opacity:1; font-size:52px; }
+    .why-icon { font-size:26px; margin-bottom:10px; }
+    .why-title { font-size:14px; font-weight:700; margin-bottom:6px; }
+    .why-text { font-size:11px; color:var(--grey); line-height:1.6; }
+
+    /* ─── TEAM STRIP ─── */
+    .team-section {}
+
+    .team-strip {
+      display:flex; flex-direction:column; gap:12px;
+      margin-top:48px;
+    }
+
+    .team-card {
+      background:var(--surface);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:14px;
+      padding:18px;
+      display:flex; align-items:center; gap:16px;
+      transition:border-color .25s, transform .25s;
+      text-decoration:none; color:inherit;
+    }
+    .team-card:hover { border-color:var(--goldbord); transform:translateX(-4px); }
+
+    .team-avatar {
+      width:52px; height:52px; min-width:52px;
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; font-weight:800; color:var(--black);
+      font-family:'Tajawal',sans-serif;
+      border:2px solid var(--goldbord);
+    }
+    .ta1 { background:linear-gradient(135deg,#c8a84b,#7a5c1e); }
+    .ta2 { background:linear-gradient(135deg,#6b8cba,#2a4470); color:#f0ece0 !important; }
+    .ta3 { background:linear-gradient(135deg,#8b6b9a,#4a2a60); color:#f0ece0 !important; }
+    .ta4 { background:linear-gradient(135deg,#5a9a6a,#2a5a3a); color:#f0ece0 !important; }
+
+    .team-info { flex:1; }
+    .team-name { font-size:14px; font-weight:700; margin-bottom:2px; }
+    .team-role { font-size:11px; color:var(--gold); font-weight:600; margin-bottom:4px; }
+    .team-exp { font-size:10px; color:var(--muted); }
+    .team-arrow { color:var(--muted); font-size:18px; transition:color .2s, transform .2s; }
+    .team-card:hover .team-arrow { color:var(--gold); transform:translateX(-3px); }
+
+    /* ─── TESTIMONIALS ─── */
+    .testi-section { background:var(--bg2); overflow:hidden; }
+
+    .testi-slider-wrap {
+      position:relative;
+      margin-top:48px;
+      overflow:hidden;
+    }
+    .testi-slider {
+      display:flex;
+      gap:16px;
+      transition:transform .4s cubic-bezier(.4,0,.2,1);
+    }
+    .testi-card {
+      background:var(--surface);
+      border:1px solid var(--goldbord);
+      border-radius:16px;
+      padding:24px 20px;
+      min-width:calc(100vw - 56px);
+      flex-shrink:0;
+    }
+    .testi-quote {
+      font-family:'Cormorant Garamond',serif;
+      font-size:60px; line-height:.8;
+      color:var(--gold); opacity:.25;
+      margin-bottom:8px;
+    }
+    .testi-text { font-size:13px; color:var(--grey); line-height:1.8; margin-bottom:20px; }
+    .testi-stars { color:var(--gold); font-size:14px; letter-spacing:3px; margin-bottom:14px; }
+    .testi-author { display:flex; align-items:center; gap:12px; }
+    .testi-av {
+      width:38px; height:38px; border-radius:50%;
+      background:linear-gradient(135deg, var(--gold), var(--gold3));
+      display:flex; align-items:center; justify-content:center;
+      font-size:14px; font-weight:700; color:var(--black);
+      border:1px solid var(--goldbord);
+    }
+    .testi-name { font-size:13px; font-weight:700; }
+    .testi-sub { font-size:10px; color:var(--muted); }
+
+    .testi-controls {
+      display:flex; justify-content:center; gap:8px;
+      margin-top:20px;
+    }
+    .testi-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:var(--muted); cursor:pointer;
+      transition:background .2s, transform .2s;
+    }
+    .testi-dot.active { background:var(--gold); transform:scale(1.3); }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      position:relative; overflow:hidden;
+      text-align:center;
+      background:var(--surface);
+      border-top:1px solid var(--goldbord);
+      border-bottom:1px solid var(--goldbord);
+    }
+    .cta-section::before {
+      content:'';
+      position:absolute; inset:0;
+      background:radial-gradient(ellipse at center, rgba(200,168,75,0.08) 0%, transparent 70%);
+    }
+    .cta-content { position:relative; z-index:1; }
+    .cta-title {
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(28px,7vw,46px); font-weight:900;
+      line-height:1.15; margin-bottom:16px;
+    }
+    .cta-title span { color:var(--gold); }
+    .cta-desc { font-size:13px; color:var(--grey); line-height:1.8; max-width:380px; margin:0 auto 32px; }
+    .cta-actions { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+
+    /* ─── CONTACT STRIP ─── */
+    .contact-strip {
+      background:var(--surface);
+      border-top:1px solid var(--goldbord);
+      padding:28px;
+    }
+    .contact-grid {
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .contact-item {
+      display:flex; align-items:center; gap:14px;
+      background:var(--bg2);
+      border:1px solid rgba(255,255,255,0.04);
+      border-radius:12px; padding:14px;
+      transition:border-color .2s;
+      text-decoration:none; color:inherit;
+    }
+    .contact-item:hover { border-color:var(--goldbord); }
+    .ci-icon {
+      width:40px; height:40px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; min-width:40px;
+    }
+    .ci-label { font-size:11px; color:var(--muted); margin-bottom:2px; }
+    .ci-val { font-size:13px; font-weight:600; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background:var(--black);
+      border-top:1px solid var(--goldbord);
+      padding:36px 28px 28px;
+    }
+    .footer-top {
+      display:flex; flex-direction:column; gap:28px;
+      padding-bottom:28px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      margin-bottom:20px;
+    }
+    .footer-brand { display:flex; align-items:center; gap:12px; }
+    .footer-brand-icon {
+      width:42px; height:42px;
+      border:1px solid var(--goldbord); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--golddim); font-size:20px;
+    }
+    .footer-brand-name { font-family:'Tajawal',sans-serif; font-size:16px; font-weight:700; }
+    .footer-brand-tagline { font-size:11px; color:var(--muted); margin-top:2px; }
+    .footer-desc { font-size:12px; color:var(--muted); line-height:1.7; max-width:320px; }
+
+    .footer-nav-title { font-size:11px; font-weight:700; color:var(--white); letter-spacing:.1em; margin-bottom:12px; }
+    .footer-nav-links { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .footer-nav-links a { font-size:12px; color:var(--muted); text-decoration:none; transition:color .2s; }
+    .footer-nav-links a:hover { color:var(--gold); }
+
+    .footer-bottom {
+      display:flex; flex-direction:column; gap:8px;
+      text-align:center;
+    }
+    .footer-copy { font-size:11px; color:var(--muted); }
+    .footer-gold { font-family:'Cormorant Garamond',serif; font-size:12px; color:var(--gold); letter-spacing:.1em; opacity:.5; }
+
+    /* ─── WHATSAPP FAB ─── */
+    .wa-fab {
+      position:fixed; bottom:24px; left:20px;
+      width:52px; height:52px;
+      background:#25d366; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 6px 24px rgba(37,211,102,0.4);
+      text-decoration:none; font-size:26px;
+      z-index:800;
+      transition:transform .2s, box-shadow .2s;
+      animation:waPulse 3s ease-in-out infinite;
+    }
+    .wa-fab:hover { transform:scale(1.1); box-shadow:0 10px 32px rgba(37,211,102,0.5); }
+    @keyframes waPulse {
+      0%,100% { box-shadow:0 6px 24px rgba(37,211,102,0.4); }
+      50% { box-shadow:0 6px 40px rgba(37,211,102,0.7); }
+    }
+
+    /* ─── SCROLL REVEALS ─── */
+    .reveal {
+      opacity:0; transform:translateY(30px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-left { opacity:0; transform:translateX(30px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal-left.visible { opacity:1; transform:translateX(0); }
+
+    /* ─── FLOATING BADGE ─── */
+    .floating-badge {
+      position:absolute; top:38%; right:28px;
+      background:rgba(8,8,7,0.88);
+      border:1px solid var(--goldbord);
+      border-radius:14px;
+      padding:14px 16px;
+      z-index:2;
+      animation:floatBadge 4s ease-in-out infinite;
+    }
+    @keyframes floatBadge {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-8px); }
+    }
+    .fb-stars { color:var(--gold); font-size:12px; letter-spacing:2px; margin-bottom:4px; }
+    .fb-text { font-size:11px; color:var(--white); font-weight:600; }
+    .fb-sub { font-size:10px; color:var(--muted); }
+
+    /* responsive hint */
+    @media (min-width:600px) {
+      .why-grid { grid-template-columns:1fr 1fr; }
+      .why-card:first-child { grid-column:auto; flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a class="nav-brand" href="#">
+    <div class="nav-emblem">
+      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v10l9 5 9-5V7L12 2zm-1 14.27l-4-2.22V9.5l4 2.22v4.55zm1-6.27L8.5 7.88 12 6l3.5 1.88L12 10zm5 4.05l-4 2.22V11.7l4-2.22v4.57z"/></svg>
+    </div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-ar">مكتب المحامي</span>
+      <span class="nav-brand-sub">LAW OFFICE EST. 2009</span>
+    </div>
+  </a>
+  <div class="nav-menu">
+    <a href="service.html">الخدمات</a>
+    <a href="Aboutus.html">من نحن</a>
+    <a href="team.html">الفريق</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-scale hbs1"></div>
+    <div class="hero-bg-scale hbs2"></div>
+    <div class="hero-bg-scale hbs3"></div>
+  </div>
+  <div class="hero-line"></div>
+  <div class="hero-corner"></div>
+  <div class="hero-corner2"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span>SINCE 2009 · مكتب محاماة متخصص</span>
+    </div>
+
+    <h1 class="hero-h1">
+      <span class="line1">هنا</span>
+      <span class="line2">يملك القانون</span>
+      <span class="line3">كلمته الأخيرة</span>
+    </h1>
+
+    <p class="hero-desc">
+      نقدم خدمات قانونية احترافية متكاملة بخبرة تجاوزت 15 عاماً،
+      من القضايا المدنية والجنائية إلى قضايا الأسرة والتجارة.
+      فريقنا يُحارب من أجل حقوقك.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        احجز استشارة مجانية
+        <span>←</span>
+      </a>
+      <a href="#services" class="btn-ghost">
+        <span>اعرف خدماتنا</span>
+        <span>↓</span>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hs-item">
+        <div class="hs-num" data-count="500">0</div>
+        <div class="hs-label">قضية منجزة</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-num" data-count="15">0</div>
+        <div class="hs-label">سنة خبرة</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-num">98%</div>
+        <div class="hs-label">نسبة النجاح</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating trust badge -->
+  <div class="floating-badge">
+    <div class="fb-stars">★★★★★</div>
+    <div class="fb-text">موثوق ومُعتمد</div>
+    <div class="fb-sub">نقابة المحامين المصريين</div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-text">SCROLL</div>
+    <div class="scroll-hint-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item">القضايا المدنية<span class="marquee-dot"></span></span>
+    <span class="marquee-item">قضايا الأسرة<span class="marquee-dot"></span></span>
+    <span class="marquee-item">القضايا الجنائية<span class="marquee-dot"></span></span>
+    <span class="marquee-item">القانون التجاري<span class="marquee-dot"></span></span>
+    <span class="marquee-item">قضايا العمل<span class="marquee-dot"></span></span>
+    <span class="marquee-item">التحكيم الدولي<span class="marquee-dot"></span></span>
+    <span class="marquee-item">طعون النقض<span class="marquee-dot"></span></span>
+    <span class="marquee-item">تأسيس الشركات<span class="marquee-dot"></span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">القضايا المدنية<span class="marquee-dot"></span></span>
+    <span class="marquee-item">قضايا الأسرة<span class="marquee-dot"></span></span>
+    <span class="marquee-item">القضايا الجنائية<span class="marquee-dot"></span></span>
+    <span class="marquee-item">القانون التجاري<span class="marquee-dot"></span></span>
+    <span class="marquee-item">قضايا العمل<span class="marquee-dot"></span></span>
+    <span class="marquee-item">التحكيم الدولي<span class="marquee-dot"></span></span>
+    <span class="marquee-item">طعون النقض<span class="marquee-dot"></span></span>
+    <span class="marquee-item">تأسيس الشركات<span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+
+
+
+<!-- ═══ WHY US ═══ -->
+<section class="why-section">
+  <div class="sec-label reveal">
+    <div class="sec-label-line"></div>
+    <div class="sec-label-text">WHY US · لماذا نحن</div>
+  </div>
+  <h2 class="sec-title reveal">ما يجعلنا<br><span>مختلفين</span></h2>
+
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div>
+        <div class="why-num">01</div>
+        <div class="why-title">خبرة حقيقية لا مجرد ألقاب</div>
+        <div class="why-text">فريقنا حارب آلاف القضايا أمام المحاكم الحقيقية، ويعرف كيف يفكر القاضي والنيابة والخصم في آنٍ واحد.</div>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🎯</div>
+      <div class="why-title">استراتيجية مخصصة لك</div>
+      <div class="why-text">كل قضية لها خصوصيتها، نصمم استراتيجية مختلفة لكل موكل</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon"></div>
+      <div class="why-title">متاح على مدار الساعة</div>
+      <div class="why-text">لا تنتظر ساعات العمل، نحن هنا 24/7 لمساعدتك في أي لحظة</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🔒</div>
+      <div class="why-title">سرية مهنية مطلقة</div>
+      <div class="why-text">محمي بسرية قانونية كاملة، معلوماتك لن تصل لأحد تحت أي ظرف</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">💳</div>
+      <div class="why-title">أسعار شفافة بلا مفاجآت</div>
+      <div class="why-text">نحدد التكلفة الكاملة من البداية، مع إمكانية تقسيط الأتعاب بمرونة</div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testi-section">
+  <div class="sec-label reveal">
+    <div class="sec-label-line"></div>
+    <div class="sec-label-text">TESTIMONIALS · آراء عملائنا</div>
+  </div>
+  <h2 class="sec-title reveal">ماذا يقول<br><span>موكلونا</span></h2>
+
+  <div class="testi-slider-wrap reveal">
+    <div class="testi-slider" id="testiSlider">
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">تجربة استثنائية من أول لحظة. المحامي كان معي في كل خطوة، شرح لي كل التفاصيل بوضوح، وانتهت القضية بنتيجة أفضل مما توقعت. أنصح كل شخص يحتاج محامياً أن يتواصل معهم.</p>
+        <div class="testi-author">
+          <div class="testi-av">أ</div>
+          <div>
+            <div class="testi-name">أحمد محمود</div>
+            <div class="testi-sub">قضية مدنية — عقارات</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">في أصعب مرحلة في حياتي كانوا بجانبي. المحامية سارة تعاملت مع قضية الحضانة بإنسانية واحترافية نادرة. الحمد لله انتهى كل شيء بأفضل نتيجة لأطفالي.</p>
+        <div class="testi-author">
+          <div class="testi-av">ر</div>
+          <div>
+            <div class="testi-name">ريم عبدالله</div>
+            <div class="testi-sub">قضية أسرة — حضانة</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">ساعدوني في تأسيس شركتي وصياغة جميع العقود بشكل احترافي. الفريق محترف جداً ومتعاون، والأسعار منطقية مقارنة بالخدمة المقدمة. شكراً مكتب المحامي!</p>
+        <div class="testi-author">
+          <div class="testi-av">م</div>
+          <div>
+            <div class="testi-name">محمد سامي</div>
+            <div class="testi-sub">قانون تجاري — تأسيس شركة</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="testi-controls">
+      <div class="testi-dot active" onclick="goSlide(0)"></div>
+      <div class="testi-dot" onclick="goSlide(1)"></div>
+      <div class="testi-dot" onclick="goSlide(2)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-content reveal">
+    <h2 class="cta-title">حقوقك تستحق<br><span>أفضل دفاع</span></h2>
+    <p class="cta-desc">لا تواجه المشاكل القانونية وحدك. تواصل معنا اليوم واحصل على استشارة مجانية مع أحد محامينا المتخصصين.</p>
+    <div class="cta-actions">
+      <a href="#contact" class="btn-primary">احجز استشارة مجانية ←</a>
+      <a href="faq.html" class="btn-ghost">الأسئلة الشائعة</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT STRIP ═══ -->
+<div class="contact-strip" id="contact">
+  <div class="sec-label reveal" style="margin-bottom:20px;">
+    <div class="sec-label-line"></div>
+    <div class="sec-label-text">CONTACT · تواصل معنا</div>
+  </div>
+  <div class="contact-grid">
+    <a href="https://wa.me/201000000000" class="contact-item reveal" target="_blank">
+      <div class="ci-icon" style="background:rgba(37,211,102,0.12);">💬</div>
+      <div>
+        <div class="ci-label">واتساب</div>
+        <div class="ci-val">رد فوري — 24/7</div>
+      </div>
+    </a>
+    <a href="tel:01000000000" class="contact-item reveal">
+      <div class="ci-icon" style="background:var(--golddim);"></div>
+      <div>
+        <div class="ci-label">هاتف</div>
+        <div class="ci-val">01000000000</div>
+      </div>
+    </a>
+    <a href="mailto:info@lawyer.com" class="contact-item reveal">
+      <div class="ci-icon" style="background:rgba(100,149,237,0.12);">✉️</div>
+      <div>
+        <div class="ci-label">البريد الإلكتروني</div>
+        <div class="ci-val">info@lawyer.com</div>
+      </div>
+    </a>
+    <div class="contact-item reveal">
+      <div class="ci-icon" style="background:rgba(255,80,80,0.10);">📍</div>
+      <div>
+        <div class="ci-label">العنوان</div>
+        <div class="ci-val">القاهرة — مصر الجديدة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">
+        <div class="footer-brand-icon">⚖️</div>
+        <div>
+          <div class="footer-brand-name">مكتب المحامي</div>
+          <div class="footer-brand-tagline">خدمات قانونية متكاملة منذ 2009</div>
+        </div>
+      </div>
+      <br>
+      <p class="footer-desc">نؤمن بأن العدالة حق للجميع، ونعمل بجد وإخلاص لتحقيقها لكل موكل يثق بنا.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">روابط سريعة</div>
+      <ul class="footer-nav-links">
+        <li><a href="#">الرئيسية</a></li>
+        <li><a href="services.html">خدماتنا</a></li>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="team.html">فريق العمل</a></li>
+        <li><a href="faq.html">الأسئلة الشائعة</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-nav-title">التخصصات</div>
+      <ul class="footer-nav-links">
+        <li><a href="services.html">القضايا المدنية</a></li>
+        <li><a href="services.html">قضايا الأسرة</a></li>
+        <li><a href="services.html">القضايا الجنائية</a></li>
+        <li><a href="services.html">القانون التجاري</a></li>
+        <li><a href="services.html">قضايا العمل</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-gold">JUSTICE · INTEGRITY · EXCELLENCE</div>
+    <div class="footer-copy">© 2025 مكتب المحامي — جميع الحقوق محفوظة</div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a class="wa-fab" href="https://wa.me/201000000000" target="_blank">💬</a>
+
+<script>
+  // ── Cursor
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.transform=`translate(${mx-5}px,${my-5}px)`; });
+  setInterval(()=>{ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.transform=`translate(${rx-18}px,${ry-18}px)`; }, 16);
+  document.querySelectorAll('a,button,.srv-card,.team-card,.why-card').forEach(el => {
+    el.addEventListener('mouseenter',()=>{ cur.classList.add('hov'); ring.classList.add('hov'); });
+    el.addEventListener('mouseleave',()=>{ cur.classList.remove('hov'); ring.classList.remove('hov'); });
+  });
+
+  // ── Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal, .reveal-left').forEach(el => obs.observe(el));
+
+  // ── Counter animation
+  function animateCount(el, target, suffix='') {
+    let start=0, duration=1800;
+    let startTime=null;
+    const step = ts => {
+      if(!startTime) startTime=ts;
+      const progress = Math.min((ts-startTime)/duration, 1);
+      const ease = 1-Math.pow(1-progress, 3);
+      el.textContent = Math.floor(ease*target) + suffix;
+      if(progress < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        const target = parseInt(e.target.dataset.count);
+        const suffix = e.target.dataset.suffix || '+';
+        animateCount(e.target, target, suffix);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+  // ── Testimonials slider
+  let currentSlide = 0;
+  function goSlide(idx) {
+    currentSlide = idx;
+    const slider = document.getElementById('testiSlider');
+    slider.style.transform = `translateX(${idx * (100/3)}%)`;
+    // fix for RTL
+    const cardW = slider.querySelector('.testi-card').offsetWidth + 16;
+    slider.style.transform = `translateX(${idx * cardW}px)`;
+    document.querySelectorAll('.testi-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+  }
+  // auto advance
+  setInterval(() => { goSlide((currentSlide+1) % 3); }, 5000);
+
+  // touch swipe for testimonials
+  let touchStartX = 0;
+  const sliderEl = document.getElementById('testiSlider');
+  sliderEl.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+  sliderEl.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if(Math.abs(diff) > 50) goSlide(diff > 0 ? Math.min(currentSlide+1,2) : Math.max(currentSlide-1,0));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+/* --- الإعدادات العامة والخطوط --- */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #080808; /* أسود فخم */
+    color: #e0e0e0;
+    line-height: 1.8;
+    font-size: 18px; /* تكبير الخط العام */
+}
+
+.text-gold {
+    color: #d4af37 !important;
+}
+
+.border-gold {
+    border-color: #d4af37 !important;
+}
+
+/* --- القائمة العلوية --- */
+.exact-navbar {
+    background-color: rgba(0, 0, 0, 0.95);
+    border-bottom: 1px solid #222;
+    padding: 15px 0;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+/* --- الهيرو (العنوان الرئيسي) --- */
+.exact-hero {
+    padding: 100px 0;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #080808 100%);
+}
+
+.exact-headline {
+    font-size: 3.5rem; /* خط ضخم وواضح */
+    font-weight: 900;
+}
+
+.exact-lead {
+    font-size: 1.3rem;
+    max-width: 850px;
+    color: #aaa;
+}
+
+.main-image-wrapper {
+    max-width: 950px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #333;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+
+.main-image-wrapper img {
+    filter: brightness(0.8);
+}
+
+/* --- قسم الخدمات والبطاقات --- */
+.exact-services {
+    background-color: #0c0c0c;
+}
+
+.exact-section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+}
+
+.exact-service-row {
+    border: 1px solid #222;
+    background-color: #080808;
+    border-radius: 12px;
+}
+
+.exact-service-item {
+    border-bottom: 1px solid #222;
+    transition: 0.3s;
+}
+
+.exact-service-item:hover {
+    background-color: #111;
+}
+
+.exact-image-col img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.1);
+    transition: 0.5s;
+}
+
+.exact-service-item:hover img {
+    filter: brightness(0.9);
+}
+
+.exact-text-col {
+    padding: 40px 50px;
+}
+
+.exact-card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.service-description {
+    font-size: 1.15rem;
+    color: #bbb;
+}
+
+.exact-readmore {
+    color: #d4af37;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* --- المميزات --- */
+.exact-feature-row {
+    background-color: #111;
+    border: 1px solid #d4af37;
+    padding: 50px 20px;
+    border-radius: 20px;
+}
+
+.border-gold-sides {
+    border-left: 1px solid rgba(212, 175, 55, 0.3);
+    border-right: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* --- الأزرار --- */
+.exact-btn-solid {
+    background-color: #d4af37;
+    color: #000;
+    padding: 18px 50px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 50px;
+    border: none;
+}
+
+.exact-btn-outline {
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+/* التجاوب مع الجوال */
+@media (max-width: 768px) {
+    .exact-headline { font-size: 2.2rem; }
+    .exact-text-col { padding: 30px 20px; text-align: center; }
+    .border-gold-sides { border: none; }
+    .exact-image-col img { height: 250px; }
+}

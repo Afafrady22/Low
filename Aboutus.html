@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>من نحن — مكتب المحامي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary:#0d0d0d; --bg-secondary:#111; --bg-card:#161616; --bg-card2:#1a1a1a;
+      --accent-gold:#c9a84c; --accent-gold-light:#e8c96a; --accent-gold-dim:rgba(201,168,76,0.12);
+      --text-primary:#f0ece0; --text-secondary:#a09880; --text-muted:#5a5548;
+      --border:rgba(201,168,76,0.2); --border-subtle:rgba(255,255,255,0.06);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Cairo','Tajawal',sans-serif; background:var(--bg-primary); color:var(--text-primary); direction:rtl; }
+
+    nav { position:fixed; top:0; right:0; left:0; z-index:100; background:rgba(13,13,13,0.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+    .nav-logo-icon { width:32px; height:32px; background:var(--accent-gold); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+    .nav-logo-text { font-size:14px; font-weight:700; color:var(--accent-gold); }
+    .nav-links { display:flex; gap:18px; list-style:none; }
+    .nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color .2s; padding:4px 0; border-bottom:2px solid transparent; }
+    .nav-links a:hover, .nav-links a.active { color:var(--accent-gold); border-bottom-color:var(--accent-gold); }
+
+    .page-header { margin-top:61px; padding:50px 20px 40px; text-align:center; position:relative; overflow:hidden; }
+    .page-header::before { content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%); width:600px; height:400px; background:radial-gradient(ellipse, rgba(201,168,76,0.1) 0%, transparent 70%); pointer-events:none; }
+    .breadcrumb { font-size:11px; color:var(--text-muted); margin-bottom:14px; }
+    .breadcrumb span { color:var(--accent-gold); }
+    .page-header h1 { font-family:'Tajawal',sans-serif; font-size:30px; font-weight:800; margin-bottom:12px; }
+    .page-header h1 span { color:var(--accent-gold); }
+    .page-header p { font-size:13px; color:var(--text-secondary); line-height:1.7; max-width:340px; margin:0 auto; }
+
+    /* STORY */
+    .story-section { padding:10px 20px 40px; }
+    .section-title { font-size:17px; font-weight:700; margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .section-title::before { content:''; width:3px; height:20px; background:var(--accent-gold); border-radius:2px; }
+    .story-card { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:18px; padding:22px; }
+    .story-card p { font-size:13px; color:var(--text-secondary); line-height:1.85; margin-bottom:14px; }
+    .story-card p:last-child { margin-bottom:0; }
+    .story-card p strong { color:var(--accent-gold); font-weight:700; }
+
+    /* VALUES */
+    .values-section { padding:0 20px 40px; }
+    .values-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .value-card { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:14px; padding:18px 14px; text-align:center; transition:border-color .2s, transform .2s; }
+    .value-card:hover { border-color:var(--border); transform:translateY(-2px); }
+    .value-icon { font-size:28px; margin-bottom:10px; display:block; }
+    .value-name { font-size:13px; font-weight:700; margin-bottom:5px; }
+    .value-text { font-size:11px; color:var(--text-muted); line-height:1.5; }
+
+    /* TIMELINE */
+    .timeline-section { padding:0 20px 40px; }
+    .timeline { display:flex; flex-direction:column; gap:0; }
+    .tl-item { display:flex; gap:16px; }
+    .tl-line { display:flex; flex-direction:column; align-items:center; }
+    .tl-dot { width:14px; height:14px; min-width:14px; border-radius:50%; background:var(--accent-gold); margin-top:4px; }
+    .tl-connector { width:2px; flex:1; background:var(--border-subtle); min-height:30px; }
+    .tl-item:last-child .tl-connector { display:none; }
+    .tl-content { padding-bottom:24px; flex:1; }
+    .tl-year { font-size:11px; font-weight:700; color:var(--accent-gold); margin-bottom:4px; }
+    .tl-title { font-size:13px; font-weight:700; margin-bottom:4px; }
+    .tl-text { font-size:12px; color:var(--text-secondary); line-height:1.6; }
+
+    /* AWARDS */
+    .awards-section { padding:0 20px 40px; }
+    .award-card { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:14px; padding:18px; margin-bottom:10px; display:flex; align-items:center; gap:14px; }
+    .award-icon { font-size:28px; min-width:44px; text-align:center; }
+    .award-title { font-size:13px; font-weight:700; margin-bottom:3px; }
+    .award-sub { font-size:11px; color:var(--text-muted); }
+
+    /* STATS FULL */
+    .stats-section { padding:0 20px 40px; }
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .stat-card { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:14px; padding:20px; text-align:center; }
+    .stat-num { font-size:28px; font-weight:900; color:var(--accent-gold); font-family:'Tajawal',sans-serif; margin-bottom:4px; }
+    .stat-desc { font-size:11px; color:var(--text-muted); font-weight:500; }
+
+    /* CTA */
+    .cta-section { margin:0 20px 50px; background:linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04)); border:1px solid var(--border); border-radius:18px; padding:28px 20px; text-align:center; }
+    .cta-section h2 { font-size:20px; font-weight:800; margin-bottom:10px; font-family:'Tajawal',sans-serif; }
+    .cta-section h2 span { color:var(--accent-gold); }
+    .cta-section p { font-size:12px; color:var(--text-secondary); margin-bottom:20px; line-height:1.6; }
+    .btn-cta { display:inline-block; background:linear-gradient(135deg,var(--accent-gold),#a8892e); border:none; border-radius:12px; padding:13px 28px; color:#0d0d0d; font-size:14px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif; text-decoration:none; transition:opacity .2s, transform .15s; }
+    .btn-cta:hover { opacity:.9; transform:translateY(-1px); }
+
+    footer { background:var(--bg-secondary); border-top:1px solid var(--border); padding:24px 20px; text-align:center; }
+    .footer-logo { font-family:'Tajawal',sans-serif; font-size:16px; font-weight:800; color:var(--accent-gold); margin-bottom:12px; }
+    .footer-links { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-bottom:16px; }
+    .footer-links a { color:var(--text-muted); text-decoration:none; font-size:11px; transition:color .2s; }
+    .footer-links a:hover { color:var(--accent-gold); }
+    .footer-copy { font-size:10px; color:var(--text-muted); }
+
+    .whatsapp-fab { position:fixed; bottom:24px; left:20px; width:50px; height:50px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,0.4); cursor:pointer; transition:transform .2s; z-index:200; text-decoration:none; font-size:24px; }
+    .whatsapp-fab:hover { transform:scale(1.1); }
+
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity .55s ease, transform .55s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="indix.html"> <div class="nav-logo-icon">⚖️</div>
+    <span class="nav-logo-text">مكتب المحامي</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="indix.html">الرئيسية</a></li>
+    <li><a href="service.html">الخدمات</a></li>
+    <li><a href="Aboutus.html" class="active">من نحن</a></li>
+    <li><a href="team.html">الفريق</a></li>
+  </ul>
+</nav>
+
+<div class="page-header fade-up">
+  <div class="breadcrumb">الرئيسية ← <span>من نحن</span></div>
+  <h1>قصتنا مع <span>القانون</span></h1>
+  <p>أكثر من 15 عاماً من الخبرة والالتزام بخدمة العدالة وحماية حقوق موكلينا</p>
+</div>
+
+<section class="story-section fade-up">
+  <div class="section-title">قصتنا</div>
+  <div class="story-card">
+    <p>تأسس <strong>مكتب المحامي</strong> عام 2009 على يد نخبة من المحامين المتخصصين، بهدف تقديم خدمات قانونية متكاملة ومتميزة تجمع بين الخبرة العملية العميقة والأسلوب الإنساني في التعامل مع الموكلين.</p>
+    <p>بدأنا كمكتب صغير بأحلام كبيرة، وعلى مدار السنوات نمينا لنصبح أحد أبرز المكاتب القانونية في المنطقة، مع فريق من <strong>أكثر من 12 محامياً متخصصاً</strong> في مختلف فروع القانون.</p>
+    <p>رسالتنا الأساسية: أن <strong>القانون ملك للجميع</strong>، وأن كل شخص يستحق الدفاع عن حقوقه بكفاءة واحترافية بصرف النظر عن طبيعة قضيته.</p>
+  </div>
+</section>
+
+<section class="values-section fade-up">
+  <div class="section-title">قيمنا الأساسية</div>
+  <div class="values-grid">
+    <div class="value-card">
+      <span class="value-icon">🎯</span>
+      <div class="value-name">الدقة</div>
+      <div class="value-text">ندرس كل تفصيلة في قضيتك بعناية فائقة</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🤝</span>
+      <div class="value-name">الأمانة</div>
+      <div class="value-text">نلتزم بالصدق الكامل مع موكلينا دائماً</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🔒</span>
+      <div class="value-name">السرية</div>
+      <div class="value-text">معلوماتك محمية بأعلى معايير الخصوصية</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">⚡</span>
+      <div class="value-name">السرعة</div>
+      <div class="value-text">نتحرك بسرعة لحماية حقوقك في الوقت المناسب</div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section fade-up">
+  <div class="section-title">بالأرقام</div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">+500</div><div class="stat-desc">قضية منجزة بنجاح</div></div>
+    <div class="stat-card"><div class="stat-num">15+</div><div class="stat-desc">سنة في الميدان</div></div>
+    <div class="stat-card"><div class="stat-num">12</div><div class="stat-desc">محامٍ متخصص</div></div>
+    <div class="stat-card"><div class="stat-num">98%</div><div class="stat-desc">نسبة رضا العملاء</div></div>
+  </div>
+</section>
+
+<section class="timeline-section fade-up">
+  <div class="section-title">مسيرتنا عبر السنين</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-content"><div class="tl-year">٢٠٠٩</div><div class="tl-title">تأسيس المكتب</div><div class="tl-text">بدأنا رحلتنا بثلاثة محامين وحلم كبير</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-content"><div class="tl-year">٢٠١٣</div><div class="tl-title">أول 100 قضية</div><div class="tl-text">أنجزنا أولى مئة قضية بنسبة نجاح تجاوزت 90%</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-content"><div class="tl-year">٢٠١٧</div><div class="tl-title">توسع الفريق</div><div class="tl-text">انضم لنا محامون متخصصون في القانون التجاري والجنائي</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-content"><div class="tl-year">٢٠٢١</div><div class="tl-title">جائزة التميز القانوني</div><div class="tl-text">حصلنا على جائزة أفضل مكتب محاماة متخصص في المنطقة</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-content"><div class="tl-year">٢٠٢٥</div><div class="tl-title">اليوم</div><div class="tl-text">أكثر من 500 قضية ناجحة وفريق من 12 محامياً متخصصاً</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="awards-section fade-up">
+  <div class="section-title">شهاداتنا وجوائزنا</div>
+  <div class="award-card"><div class="award-icon">🏆</div><div><div class="award-title">جائزة التميز القانوني 2021</div><div class="award-sub">نقابة المحامين — أفضل مكتب في المنطقة</div></div></div>
+  <div class="award-card"><div class="award-icon">📜</div><div><div class="award-title">شهادة الجودة المهنية</div><div class="award-sub">الاتحاد العربي للمحامين — 2019</div></div></div>
+  <div class="award-card"><div class="award-icon">⭐</div><div><div class="award-title">أفضل خدمة عملاء</div><div class="award-sub">تقييم العملاء على Google — 4.9/5</div></div></div>
+</section>
+
+<div class="cta-section fade-up">
+  <h2>تعرف على <span>فريقنا</span></h2>
+  <p>اكتشف من هم المحامون الذين سيدافعون عن حقوقك</p>
+  <a href="team.html" class="btn-cta">تعرف على الفريق ←</a>
+</div>
+
+<footer>
+  <div class="footer-logo">⚖️ مكتب المحامي</div>
+  <div class="footer-links">
+    <a href="page.html">الرئيسية</a>
+    <a href="services.html">خدماتنا</a>
+    <a href="about.html">من نحن</a>
+    <a href="team.html">الفريق</a>
+    <a href="faq.html">الأسئلة الشائعة</a>
+  </div>
+  <div class="footer-copy">© 2025 مكتب المحامي — جميع الحقوق محفوظة</div>
+</footer>
+
+<a class="whatsapp-fab" href="https://wa.me/201000000000" target="_blank">💬</a>
+
+<script>
+  const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }); }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
